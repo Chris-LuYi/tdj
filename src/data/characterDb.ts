@@ -4,7 +4,7 @@ export const characters: TDJ.Character[] = [
   {
     name: '燕明蓉',
     rarity: '绝',
-    element: '雷s1',
+    element: '雷',
     weapon: {
       level: 40,
       attributeBonus: {

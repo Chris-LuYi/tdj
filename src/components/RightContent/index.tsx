@@ -16,7 +16,7 @@ const ENVTagColor = {
 
 const GlobalHeaderRight: React.FC = () => {
   const { initialState } = useModel('@@initialState');
-  return null;
+  // return null;
 
   // @ts-ignore
   if (!initialState || !initialState.settings) {

@@ -16,7 +16,7 @@ export default defineConfig({
   },
   layout: {
     // https://umijs.org/zh-CN/plugins/plugin-layout
-    locale: false,
+    // locale: false,
     siderWidth: 208,
     ...defaultSettings,
   },
@@ -26,7 +26,7 @@ export default defineConfig({
     default: 'zh-CN',
     antd: true,
     // default true, when it is true, will use `navigator.language` overwrite default
-    baseNavigator: true,
+    baseNavigator: false,
   },
   dynamicImport: {
     loading: '@ant-design/pro-layout/es/PageLoading',

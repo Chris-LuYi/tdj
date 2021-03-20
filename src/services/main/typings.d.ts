@@ -1,10 +1,10 @@
 // @ts-ignore
 /* eslint-disable */
-declare const RARITY: '凡' | '卓' | '级' | '绝';
-declare const JOB: '咒师' | '御风' | '侠客' | '铁卫' | '祝由';
-declare const ELEMENT: '火' | '雷' | '冰' | '光' | '暗';
+type RARITY = '凡' | '卓' | '级' | '绝';
+type JOB = '咒师' | '御风' | '侠客' | '铁卫' | '祝由';
+type ELEMENT = '火' | '雷' | '冰' | '光' | '暗';
 
-declare const CHARACTER_ATTRIBUTE:
+type CHARACTER_ATTRIBUTE =
   | 'hp'
   | 'physicalAttack'
   | 'physicalDefense'
@@ -12,7 +12,7 @@ declare const CHARACTER_ATTRIBUTE:
   | 'magicDefense'
   | 'critical';
 
-declare const DAMAGE_TYPE:
+type DAMAGE_TYPE =
   | 'attackDamage'
   | 'skillDamage'
   | 'outerDamage'
@@ -20,7 +20,7 @@ declare const DAMAGE_TYPE:
   | 'aoeDamage'
   | 'fixedDamage';
 
-declare const EQUIPMENT_TYPE: 'head' | 'body' | 'waist' | 'wrist';
+type EQUIPMENT_TYPE = 'head' | 'body' | 'waist' | 'wrist';
 
 declare namespace TDJ {
   type Skill = {

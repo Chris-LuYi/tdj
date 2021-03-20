@@ -103,6 +103,7 @@ export async function getInitialState(): Promise<{
 // https://umijs.org/zh-CN/plugins/plugin-layout
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   return {
+    menu: { locale: true },
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     waterMarkProps: {
