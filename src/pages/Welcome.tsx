@@ -3,7 +3,9 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Alert, Typography } from 'antd';
 import { useIntl, FormattedMessage } from 'umi';
 import styles from './Welcome.less';
+import { characters } from '@/data/characterDb';
 
+console.log(characters);
 const CodePreview: React.FC = ({ children }) => (
   <pre className={styles.pre}>
     <code>

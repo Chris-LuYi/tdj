@@ -16,11 +16,14 @@ const ENVTagColor = {
 
 const GlobalHeaderRight: React.FC = () => {
   const { initialState } = useModel('@@initialState');
+  return null;
 
+  // @ts-ignore
   if (!initialState || !initialState.settings) {
     return null;
   }
 
+  // @ts-ignore
   const { navTheme, layout } = initialState.settings;
   let className = styles.right;
 
