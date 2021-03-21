@@ -14,7 +14,7 @@ const loginPath = '/user/login';
 
 /** 获取用户信息比较慢的时候会展示一个 loading */
 export const initialStateConfig = {
-  loading: <PageLoading />,
+  loading: <PageLoading tip="天地劫计算器" />,
 };
 
 /**
@@ -30,7 +30,7 @@ export async function getInitialState(): Promise<{
       // const currentUser = await queryCurrentUser();
 
       return {
-        name: '天地劫助手@RequiemSoul',
+        name: 'Rs',
         avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
         userid: '00000001',
         email: 'antdesign@alipay.com',
@@ -107,7 +107,8 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     waterMarkProps: {
-      content: initialState?.currentUser?.name,
+      content: '天地劫助手@RequiemSoul',
+      fontColor: 'rgba(0,0,0,.05)',
     },
     footerRender: () => <Footer />,
     onPageChange: () => {

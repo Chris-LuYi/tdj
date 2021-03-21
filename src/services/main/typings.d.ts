@@ -1,26 +1,25 @@
 // @ts-ignore
 /* eslint-disable */
-type RARITY = '凡' | '卓' | '级' | '绝';
-type JOB = '咒师' | '御风' | '侠客' | '铁卫' | '祝由';
-type ELEMENT = '火' | '雷' | '冰' | '光' | '暗';
+type Rarity = '凡' | '卓' | '级' | '绝';
+type Job = '咒师' | '御风' | '侠客' | '铁卫' | '祝由';
+type Element = '火' | '雷' | '冰' | '光' | '暗';
 
-type CHARACTER_ATTRIBUTE =
-  | 'hp'
-  | 'physicalAttack'
-  | 'physicalDefense'
-  | 'magicAttack'
-  | 'magicDefense'
-  | 'critical';
+type CharacterAttribute = 'hp' | 'patk' | 'pdef' | 'matk' | 'mdef' | 'critical';
 
-type DAMAGE_TYPE =
-  | 'attackDamage'
-  | 'skillDamage'
-  | 'outerDamage'
-  | 'counterDamage'
-  | 'aoeDamage'
-  | 'fixedDamage';
+type SlotItemAttribute =
+  | CharacterAttribute
+  | 'pdmg'
+  | 'ppnt'
+  | 'mdmg'
+  | 'mpnt'
+  | 'pprf'
+  | 'mprf'
+  | 'cprf'
+  | 'ctprf';
 
-type EQUIPMENT_TYPE = 'head' | 'body' | 'waist' | 'wrist';
+type DamageType = 'atkdmg' | 'skldmg' | 'outdmg' | 'cntdmg' | 'aoedmg' | 'fixdmg';
+
+type EquipmentType = 'head' | 'body' | 'waist' | 'wrist';
 
 declare namespace TDJ {
   type Skill = {
@@ -31,14 +30,14 @@ declare namespace TDJ {
   type Weapon = {
     id?: number;
     level?: number;
-    attributeBonus?: Attribute;
+    attrBonus?: Attribute;
     otherBonus?: DamageModifier[];
   };
 
   type Equipment = {
     id?: number;
-    type: EQUIPMENT_TYPE;
-    attributeBonus: Attribute;
+    type: EquipmentType;
+    attrBonus: Attribute;
     level: ?number;
     slot: ?EquipmentSlotItem;
   };
@@ -46,7 +45,7 @@ declare namespace TDJ {
   type EquipmentSlotItem = {
     id?: number;
     modifiers: AttributeModifier[];
-    rarity?: RARITY;
+    rarity?: Rarity;
   };
 
   type CharacterEquipment = {
@@ -67,27 +66,43 @@ declare namespace TDJ {
   }
 
   type DamageModifier = {
-    type: ?DAMAGE_TYPE;
+    type: ?DamageType;
   } & ValueModifier;
 
   type AttributeModifier = {
-    type: ?CHARACTER_ATTRIBUTE;
+    type: ?CharacterAttribute;
   } & ValueModifier;
 
   type Attribute = {
     hp?: number;
-    physicalAttack?: number;
-    physicalDefense?: number;
-    magicAttack?: number;
-    magicDefense?: number;
+    patk?: number;
+    pdef?: number;
+    matk?: number;
+    mdef?: number;
     critical?: number;
+  };
+
+  type SoulStoneAttribute = {
+    type?: '荒' | '天' | '地';
+    fixModifier1?: CharacterAttribute;
+    fixModifier1Val?: number;
+    fixModifier2?: CharacterAttribute;
+    fixModifier2Val?: number;
+    dynModifier1: SlotItemAttribute;
+    dynModifier1Val?: number;
+    dynModifier2: SlotItemAttribute;
+    dynModifier2Val?: number;
+    dynModifier3: SlotItemAttribute;
+    dynModifier3Val?: number;
+    dynModifier4: SlotItemAttribute;
+    dynModifier4Val?: number;
   };
 
   type Character = {
     id?: number;
-    job?: JOB;
-    rarity?: RARITY;
-    element?: ELEMENT;
+    job?: Job;
+    rarity?: Rarity;
+    element?: Element;
     name?: string;
     avatar?: string;
     level?: number;
@@ -95,8 +110,10 @@ declare namespace TDJ {
     talent?: string;
     talentModifiers?: ValueModifier[];
     skills?: Skill[];
-    rawAttribute?: Attribute;
+    attrRaw?: Attribute;
+    attrFinal?: Attribute;
     weapon?: Weapon;
+    soulStones?: SoulStoneAttribute;
 
     equipped?: CharacterEquipment;
   };

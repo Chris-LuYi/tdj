@@ -7,17 +7,17 @@ export const characters: TDJ.Character[] = [
     element: '雷',
     weapon: {
       level: 40,
-      attributeBonus: {
+      attrBonus: {
         hp: 235,
-        physicalAttack: 216,
+        patk: 216,
       },
     },
     equipped: {
       equipments: [
         {
-          attributeBonus: {
+          attrBonus: {
             hp: 118,
-            magicDefense: 48,
+            mdef: 48,
           },
           level: 7,
           type: 'head',
@@ -31,9 +31,9 @@ export const characters: TDJ.Character[] = [
           },
         },
         {
-          attributeBonus: {
+          attrBonus: {
             hp: 118,
-            magicDefense: 48,
+            mdef: 48,
           },
           level: 7,
           type: 'body',
@@ -47,9 +47,9 @@ export const characters: TDJ.Character[] = [
           },
         },
         {
-          attributeBonus: {
+          attrBonus: {
             hp: 118,
-            magicDefense: 48,
+            mdef: 48,
           },
           level: 7,
           type: 'body',
@@ -57,7 +57,7 @@ export const characters: TDJ.Character[] = [
             modifiers: [
               {
                 value: 5,
-                type: 'physicalDefense',
+                type: 'pdef',
               },
             ],
           },
