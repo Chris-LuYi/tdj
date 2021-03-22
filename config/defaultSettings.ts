@@ -12,7 +12,7 @@ const Settings: LayoutSettings & {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: '天地劫助手',
+  title: '天地劫助手 内测版 ver0.1',
   pwa: false,
   logo: 'home.png',
   iconfontUrl: '',

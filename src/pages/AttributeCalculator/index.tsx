@@ -1,30 +1,34 @@
 import React, { useState, useEffect } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Form, message } from 'antd';
+import { Button, Form, message, Popconfirm } from 'antd';
 import { useModel } from 'umi';
 import ProForm from '@ant-design/pro-form';
 import { Select } from '@/components/Form';
-
+import type { FormInstance } from 'antd/es/form';
+import { calculateAttribute, calculateFinalAttribute } from './variables';
 import Basic from './Basic';
 import Summary from './Summary';
 
 export default (props: any): React.ReactNode => {
   // const intl = useIntl();
-  const { myCharacters, current, saveCurrent } = useModel('ac');
+  const { myCharacters, addCharacter, deleteCharacter, current, saveCurrent } = useModel('ac');
   const [currentTab, setCurrentTab] = useState('info');
 
   const [form] = Form.useForm();
   const [tempCurrent, setTempCurrent] = useState();
 
-  const sharedProps = {
+  const sharedProps: {
+    form: FormInstance;
+  } = {
     form,
   };
+  console.log(form);
   const content = {
     base: <Basic {...sharedProps} />,
     info: <Summary {...sharedProps} />,
   };
   useEffect(() => {
-    // console.log('form changed', current);
+    console.log('form changed', current);
     // form.setFieldsValue(current);
     form.resetFields();
   }, [current, form]);
@@ -33,18 +37,16 @@ export default (props: any): React.ReactNode => {
     // console.log(form.getFieldsValue());
     form.submit();
   };
+  console.log(form.getFieldsValue(), current);
   return (
-    <ProForm<{
-      name: string;
-      company: string;
-    }>
+    <ProForm<TDJ.Character>
       form={form}
       submitter={{
         render: () => {
           // console.log(props);
           return [
             <Button key="submit" type="primary" onClick={submitForm}>
-              提交
+              保存
             </Button>,
             <Button key="reset" onClick={() => props.form?.resetFields()}>
               重置
@@ -59,26 +61,38 @@ export default (props: any): React.ReactNode => {
 
         // localStorage.setItem('chacaterStaus', JSON.stringify(values));
         saveCurrent(values);
-        props.history.push(`/ac?id=${tempCurrent}`);
+        if (tempCurrent) props.history.push(`/ac?id=${tempCurrent}`);
       }}
-      // onValuesChange={(changeValues) => console.log(changeValues)}
+      onValuesChange={(changedValues: any, values: TDJ.Character) => {
+        console.log(changedValues, values);
+        // values.attrRaw.hp = values.attrFinal.hp - values.weapon?.attrBonus.hp;
+        // console.log(values.attrRaw.hp);
+        form.setFieldsValue(
+          calculateAttribute(values, {
+            panelValueChanged: !!changedValues.attrFinal,
+            panelFixedValueChange: !!changedValues.attrFinalFixed,
+            soulStoneChanged: !!changedValues.soulStones,
+          }),
+        );
+        console.log(changedValues);
+      }}
     >
       <PageContainer
         // content="欢迎使用 ProLayout 组件"
-        tabActiveKey={currentTab}
+        // tabActiveKey={currentTab}
         onTabChange={(k) => {
           setCurrentTab(k);
         }}
-        tabList={[
-          {
-            tab: '基本信息',
-            key: 'base',
-          },
-          {
-            tab: '详细信息',
-            key: 'info',
-          },
-        ]}
+        // tabList={[
+        //   {
+        //     tab: '基本信息',
+        //     key: 'base',
+        //   },
+        //   {
+        //     tab: '详细信息',
+        //     key: 'info',
+        //   },
+        // ]}
         extra={[
           <Select
             key="4"
@@ -97,12 +111,16 @@ export default (props: any): React.ReactNode => {
               }
             }}
           />,
-          <Button type="primary" key="3">
+          <Button type="primary" key="3" onClick={addCharacter}>
             添加人物
           </Button>,
-          <Button danger key="2">
-            删除人物
-          </Button>,
+          <Popconfirm
+            key="2"
+            title="确定要删除这个角色吗，该操作不可逆?"
+            onConfirm={deleteCharacter}
+          >
+            <Button danger>删除人物</Button>
+          </Popconfirm>,
         ]}
         // footer={[
         //   <Button key="rest">重置</Button>,

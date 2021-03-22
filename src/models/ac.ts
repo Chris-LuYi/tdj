@@ -1,30 +1,49 @@
 import { useState, useEffect } from 'react';
 import { List } from 'immutable';
+import _ from 'lodash';
 // import { characters } from '@/data';
 import { history } from 'umi';
 
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * Math.floor(max));
 }
-const defaultCharacters = [
+const getNewId = () => `${Date.now()}${getRandomInt(10000)}`;
+const defaultCharacters: TDJ.Character[] = [
   {
-    id: `${Date.now()}${getRandomInt(10000)}`,
+    id: getNewId(),
     name: '燕明蓉',
-
-    equipments: [
-      {
-        pos: 'head',
+    attrFinal: {
+      hp: 0,
+      patk: 0,
+      pdef: 0,
+      matk: 0,
+      mdef: 0,
+      critical: 0,
+    },
+    attrRaw: {
+      hp: 0,
+      patk: 0,
+      pdef: 0,
+      matk: 0,
+      mdef: 0,
+      critical: 0,
+    },
+    attrFinalFixed: {
+      hp: 0,
+      patk: 0,
+      pdef: 0,
+      matk: 0,
+      mdef: 0,
+      critical: 0,
+    },
+    weapon: {
+      attrBonus: {
+        hp: 0,
+        patk: 0,
+        matk: 0,
       },
-      {
-        pos: 'body',
-      },
-      {
-        pos: 'waist',
-      },
-      {
-        pos: 'wrist',
-      },
-    ],
+      otherBonus: [],
+    },
     soulStones: [
       {
         id: 1,
@@ -39,26 +58,65 @@ const defaultCharacters = [
         type: '地',
       },
     ],
-  },
-  {
-    id: `${Date.now()}${getRandomInt(10000)}`,
-    name: '人物2',
-    equipments: [
-      {
-        pos: 'head',
+    soulStoneSet: [],
+    equipped: {
+      equipments: [
+        {
+          type: 'head',
+          attrBonus: [],
+        },
+        {
+          type: 'body',
+          attrBonus: [],
+        },
+        {
+          type: 'waist',
+          attrBonus: [],
+        },
+        {
+          type: 'wrist',
+          attrBonus: [],
+        },
+      ],
+      setBonus: [
+        {
+          types: ['hp'],
+        },
+        {
+          types: ['pdef', 'mdef'],
+        },
+      ],
+    },
+    wunei: {
+      percentage: {
+        types: ['hp', 'matk', 'mdef', 'patk', 'pdef', 'critical'],
+        value: 0,
       },
-      {
-        pos: 'body',
-      },
-      {
-        pos: 'waist',
-      },
-      {
-        pos: 'wrist',
-      },
-    ],
+      fixed: [],
+    },
+    astrolabe: {
+      percentage: [
+        {
+          types: ['pdef'],
+          value: 0,
+        },
+        {
+          types: ['mdef'],
+          value: 0,
+        },
+        {
+          types: ['patk', 'matk'],
+          value: 0,
+        },
+        {
+          types: ['hp'],
+          value: 0,
+        },
+      ],
+    },
   },
 ];
+
 export default () => {
   const [myCharacters, setMyCharacters] = useState(() => {
     return localStorage.getItem('myCharacters')
@@ -87,15 +145,33 @@ export default () => {
     };
     history.listen(locationChange);
     locationChange(location);
-  }, []);
-  console.log(myCharacters.get(current));
+  }, [myCharacters]);
+
+  const addCharacter = () => {
+    const newData = _.cloneDeep(defaultCharacters[0]);
+    newData.id = getNewId();
+    newData.name = `人物${myCharacters.size + 1}`;
+    const newList = myCharacters.push(newData);
+    setMyCharacters(newList);
+    history.push(`/ac?id=${newData.id}`);
+    localStorage.setItem('myCharacters', JSON.stringify(newList.toJS()));
+  };
+  const deleteCharacter = () => {
+    if (myCharacters.size <= 1) return;
+    const newList = myCharacters.remove(current);
+    setMyCharacters(newList);
+    history.push(`/ac?id=${(newList.last() as TDJ.Character).id}`);
+    localStorage.setItem('myCharacters', JSON.stringify(newList.toJS()));
+  };
   return {
     myCharacters: myCharacters.toJS(),
-    current: myCharacters.get(current),
+    addCharacter,
+    deleteCharacter,
+    current: myCharacters.get(current) as TDJ.Character,
     saveCurrent: (v: any) => {
-      const newData = myCharacters.set(current, v);
-      setMyCharacters(newData);
-      localStorage.setItem('myCharacters', JSON.stringify(newData.toJS()));
+      const newList = myCharacters.set(current, v);
+      setMyCharacters(newList);
+      localStorage.setItem('myCharacters', JSON.stringify(newList.toJS()));
     },
     // setCurrent: (v: number) => {
     //   const obj = myCharacters.find((o: any) => {

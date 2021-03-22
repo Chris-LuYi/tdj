@@ -6,3 +6,23 @@
   background: @input-bg;
   box-shadow: @card-shadow;
 }
+
+.green {
+  :global {
+    .ant-input-number:nth-child(3) {
+      color: green;
+    }
+    .connect {
+      text-align: center;
+    }
+  }
+}
+
+.dynamicItemContainer {
+  color: red;
+  :global {
+    .ant-space-item {
+      // display: flex;
+    }
+  }
+}
