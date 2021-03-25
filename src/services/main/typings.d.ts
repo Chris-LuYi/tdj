@@ -137,7 +137,7 @@ declare namespace TDJ {
     level?: number;
     exp?: number;
     talent?: string;
-    talentModifiers?: ValueModifier[];
+    talentModifiers?: BUFFAttributeModifier[];
     skills?: Skill[];
     attrRaw: Attribute;
     attrFinal: Attribute;

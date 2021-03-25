@@ -17,6 +17,8 @@ import {
 import Equipment from './Component/Equipment';
 import Wunei from './Component/Wunei';
 import PanelAttrField from './Component/PanelAttrField';
+import Talent from './Component/Talent';
+import { useModel } from 'umi';
 
 console.log(attrWeaponSetSelectOptions);
 const EditTableInput = () => {
@@ -139,6 +141,8 @@ const columns: ProColumns<DataSourceType>[] = [
 const equipments: EquipmentType[] = ['head', 'body', 'waist', 'wrist'];
 
 export default ({ form }: { form: any }) => {
+  const { showDetail } = useModel('ac');
+
   return (
     <Card>
       <h3>基本数据</h3>
@@ -164,20 +168,26 @@ export default ({ form }: { form: any }) => {
         <Digit placeholder="自动计算" name={['attrBattle', 'mdef']} label="法防" disabled />
         <Digit placeholder="自动计算" name={['attrBattle', 'critical']} label="会心" disabled />
       </ProForm.Group>
-      <h3>基础属性</h3>
-      <ProForm.Group>
-        <Digit placeholder="自动计算" name={['attrRaw', 'hp']} label="气血" disabled />
-        <Digit placeholder="自动计算" name={['attrRaw', 'patk']} label="物攻" disabled />
-        <Digit placeholder="自动计算" name={['attrRaw', 'pdef']} label="物防" disabled />
-        <Digit placeholder="自动计算" name={['attrRaw', 'matk']} label="法攻" disabled />
-        <Digit placeholder="自动计算" name={['attrRaw', 'mdef']} label="法防" disabled />
-        <Digit placeholder="自动计算" name={['attrRaw', 'critical']} label="会心" disabled />
-      </ProForm.Group>
+      <div style={{ display: showDetail ? 'inherit' : 'none' }}>
+        <h3>基础属性</h3>
+        <ProForm.Group>
+          <Digit placeholder="自动计算" name={['attrRaw', 'hp']} label="气血" disabled />
+          <Digit placeholder="自动计算" name={['attrRaw', 'patk']} label="物攻" disabled />
+          <Digit placeholder="自动计算" name={['attrRaw', 'pdef']} label="物防" disabled />
+          <Digit placeholder="自动计算" name={['attrRaw', 'matk']} label="法攻" disabled />
+          <Digit placeholder="自动计算" name={['attrRaw', 'mdef']} label="法防" disabled />
+          <Digit placeholder="自动计算" name={['attrRaw', 'critical']} label="会心" disabled />
+        </ProForm.Group>
+      </div>
       <h3>兵刃练度</h3>
+      <div style={{ display: showDetail ? 'inherit' : 'none' }}>
+        <ProForm.Group>
+          <Digit name={['weapon', 'attrBonus', 'hp']} label="气血" />
+          <Digit name={['weapon', 'attrBonus', 'patk']} label="物攻" />
+          <Digit name={['weapon', 'attrBonus', 'matk']} label="法攻" />
+        </ProForm.Group>
+      </div>
       <ProForm.Group>
-        <Digit name={['weapon', 'attrBonus', 'hp']} label="气血" />
-        <Digit name={['weapon', 'attrBonus', 'patk']} label="物攻" />
-        <Digit name={['weapon', 'attrBonus', 'matk']} label="法攻" />
         <ProSelect
           name={['weapon', 'otherBonus', 0, 'type']}
           options={attrWeaponSelectOptionsAry}
@@ -284,6 +294,8 @@ export default ({ form }: { form: any }) => {
         />
         <Digit name={['astrolabe', 'percentage', 3, 'value']} label={`百分比加值(%)`} />
       </ProForm.Group>
+      <h3>角色天赋百分比加成</h3>
+      <Talent />
       <h3>BUFF</h3>
       <ProForm.Group>
         <ProFormCheckbox.Group name="battleBuffs" options={buffCheckboxGroup} />

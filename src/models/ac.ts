@@ -125,6 +125,8 @@ export default () => {
   });
   const [current, setCurrent] = useState(0);
 
+  const [showDetail, setShowDetail] = useState(false);
+
   useEffect(() => {
     // console.log(myCharacters.indexOf(current));
     // // myCharacters.update(myCharacters.indexOf(current))
@@ -173,6 +175,8 @@ export default () => {
       setMyCharacters(newList);
       localStorage.setItem('myCharacters', JSON.stringify(newList.toJS()));
     },
+    showDetail,
+    setShowDetail,
     // setCurrent: (v: number) => {
     //   const obj = myCharacters.find((o: any) => {
     //     return o.id === v;

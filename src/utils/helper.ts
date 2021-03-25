@@ -48,7 +48,12 @@ export const calculateFinalAttribute = (data: TDJ.Character) => {
 
 export const calculateAttribute = (
   data: TDJ.Character,
-  { panelValueChanged = false, soulStoneChanged = false, panelFixedValueChange = false },
+  {
+    panelValueChanged = false,
+    soulStoneChanged = false,
+    panelFixedValueChange = false,
+    combatStatusChange = false,
+  },
 ) => {
   // formula
   // 人物进图前总面板计算方式为
@@ -127,7 +132,7 @@ export const calculateAttribute = (
       // const soulStoneBonus = newData.soulStones.reduce((accumulator, currentValue)=>{
       //   accumulator.push(currentValue.fixModifier1)
       // },[])
-      if (!soulStoneChanged && !panelFixedValueChange) {
+      if (!soulStoneChanged && !panelFixedValueChange && !combatStatusChange) {
         if (panelValueChanged) {
           const attrLevelAndStar =
             (newData.attrFinal[attr] || 0) / totalPanelDataPct -
@@ -137,8 +142,16 @@ export const calculateAttribute = (
           newData.attrRaw[attr] = Math.ceil(attrLevelAndStar);
         } else {
           // console.log(11111111111111, totalPanelDataPct);
+          console.log(
+            newData.attrRaw[attr],
+            attrWeapon,
+            attrEquipment,
+            attrWunei,
+            totalPanelDataPct,
+          );
           newData.attrFinal[attr] =
-            (newData.attrRaw[attr] + attrWeapon + attrEquipment + attrWunei) * totalPanelDataPct;
+            ((newData.attrRaw[attr] || 0) + attrWeapon + attrEquipment + attrWunei) *
+            totalPanelDataPct;
 
           // newData.attrRaw[attr] = attrLevelAndStar;
         }
@@ -181,7 +194,15 @@ export const calculateAttribute = (
 
       // 人物进图时面板计算方式为
       // 进图前总面板 x (1+天赋百分比+饰品百分比+兽魂套装百分比+绝学BUFF百分比+阵法百分比)%
-      const talentPct = 0;
+      newData.talentModifiers = (newData.talentModifiers || []).filter(
+        (o) => o.types?.length ?? o.value,
+      );
+      const talentPct =
+        newData.talentModifiers
+          .filter((m) => m.types?.indexOf(attr) >= 0)
+          .map((o) => o.value)
+          .reduce(sumReducer, 0) || 0;
+
       const equipmentSlotItemPct =
         (newData.equipped?.equipments || [])
           .map((o) => {

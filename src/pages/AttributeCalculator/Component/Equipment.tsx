@@ -4,6 +4,7 @@ import { Digit, ProSelect } from '@/components/Form';
 import { attrBasicSelectOptionsAry } from '@/utils/helper';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import type { FormInstance } from 'antd/es/form';
+import { useModel } from 'umi';
 
 const mapping = {
   head: '头部',
@@ -13,36 +14,40 @@ const mapping = {
 };
 export default ({ code, index }: { code: EquipmentType; index: number; form: FormInstance }) => {
   const prefix = mapping[code];
+  const { showDetail } = useModel('ac');
 
   return (
     <>
-      <ProForm.Group>
-        <ProSelect
-          name={['equipped', 'equipments', index, 'attrBonus', 0, 'type']}
-          options={attrBasicSelectOptionsAry}
-          label={`${prefix}属性1`}
-        />
+      <div style={{ display: showDetail ? 'inherit' : 'none' }}>
+        <ProForm.Group>
+          <ProSelect
+            name={['equipped', 'equipments', index, 'attrBonus', 0, 'type']}
+            options={attrBasicSelectOptionsAry}
+            label={`${prefix}属性1`}
+          />
 
-        <Digit
-          name={['equipped', 'equipments', index, 'attrBonus', 0, 'value']}
-          label={`${prefix}属性1加值`}
-        />
-        <ProSelect
-          name={['equipped', 'equipments', index, 'attrBonus', 1, 'type']}
-          options={attrBasicSelectOptionsAry}
-          label={`${prefix}属性2`}
-        />
-        <Digit
-          name={['equipped', 'equipments', index, 'attrBonus', 1, 'value']}
-          label={`${prefix}属性2加值`}
-        />
+          <Digit
+            name={['equipped', 'equipments', index, 'attrBonus', 0, 'value']}
+            label={`${prefix}属性1加值`}
+          />
+          <ProSelect
+            name={['equipped', 'equipments', index, 'attrBonus', 1, 'type']}
+            options={attrBasicSelectOptionsAry}
+            label={`${prefix}属性2`}
+          />
+          <Digit
+            name={['equipped', 'equipments', index, 'attrBonus', 1, 'value']}
+            label={`${prefix}属性2加值`}
+          />
 
-        <ProFormText
-          name={['equipped', 'equipments', index, 'type']}
-          label={`${prefix}部位`}
-          hidden
-        />
-      </ProForm.Group>
+          <ProFormText
+            name={['equipped', 'equipments', index, 'type']}
+            label={`${prefix}部位`}
+            hidden
+          />
+        </ProForm.Group>
+      </div>
+
       <Form.List name={['equipped', 'equipments', index, 'slot', 'modifiers']}>
         {(fields, { add, remove }) => {
           return (

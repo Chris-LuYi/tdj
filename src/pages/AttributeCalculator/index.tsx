@@ -63,7 +63,7 @@ export default (props: any): React.ReactNode => {
         saveCurrent(values);
         if (tempCurrent) props.history.push(`/ac?id=${tempCurrent}`);
       }}
-      onValuesChange={(changedValues: any, values: TDJ.Character) => {
+      onValuesChange={(changedValues: TDJ.Character, values: TDJ.Character) => {
         console.log(changedValues, values);
         // values.attrRaw.hp = values.attrFinal.hp - values.weapon?.attrBonus.hp;
         // console.log(values.attrRaw.hp);
@@ -72,9 +72,12 @@ export default (props: any): React.ReactNode => {
             panelValueChanged: !!changedValues.attrFinal,
             panelFixedValueChange: !!changedValues.attrFinalFixed,
             soulStoneChanged: !!changedValues.soulStones,
+            combatStatusChange:
+              !!changedValues.talentModifiers ||
+              !!changedValues.battleBuffs ||
+              !!changedValues.formation,
           }),
         );
-        console.log(changedValues);
       }}
     >
       <PageContainer
