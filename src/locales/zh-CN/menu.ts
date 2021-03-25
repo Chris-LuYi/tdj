@@ -50,6 +50,6 @@ export default {
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
 
-  'menu.damageCalculator': '伤害计算',
-  'menu.attributeCalculator': '属性计算',
+  'menu.damageCalculator': '伤害计算器',
+  'menu.attributeCalculator': '人物数据库',
 };

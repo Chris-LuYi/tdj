@@ -13,11 +13,10 @@ import {
   buffCheckboxGroup,
   formationRadioGroup,
   attrSoulStoneSelectOptionsAry,
-} from './variables';
+} from '@/utils/helper';
 import Equipment from './Component/Equipment';
 import Wunei from './Component/Wunei';
 import PanelAttrField from './Component/PanelAttrField';
-import styles from './index.less';
 
 console.log(attrWeaponSetSelectOptions);
 const EditTableInput = () => {

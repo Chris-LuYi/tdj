@@ -5,7 +5,7 @@ import { useModel } from 'umi';
 import ProForm from '@ant-design/pro-form';
 import { Select } from '@/components/Form';
 import type { FormInstance } from 'antd/es/form';
-import { calculateAttribute, calculateFinalAttribute } from './variables';
+import { calculateAttribute, calculateFinalAttribute } from '@/utils/helper';
 import Basic from './Basic';
 import Summary from './Summary';
 

@@ -152,4 +152,13 @@ declare namespace TDJ {
     battleBuffs?: number[];
     formation?: number;
   };
+
+  type Combat = {
+    id?: string;
+    name?: string;
+    attackerId: string;
+    defenderId: string;
+    attacker?: Character;
+    defender?: Character;
+  };
 }

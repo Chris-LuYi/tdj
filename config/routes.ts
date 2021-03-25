@@ -1,4 +1,4 @@
-﻿export default [
+export default [
   {
     path: '/user',
     layout: false,
@@ -24,10 +24,9 @@
   {
     path: '/dc',
     name: 'damageCalculator',
-    icon: 'table',
-    component: './AttributeCalculator',
-  },
-  // {
+    icon: 'calculator',
+    component: './DamageCalculator',
+  }, // {
   //   path: '/admin',
   //   name: 'admin',
   //   icon: 'crown',
@@ -51,6 +50,12 @@
   {
     path: '/',
     redirect: '/ac',
+  },
+  {
+    name: '空白页面',
+    icon: 'smile',
+    path: '/emptypage',
+    component: './EmptyPage',
   },
   {
     component: './404',

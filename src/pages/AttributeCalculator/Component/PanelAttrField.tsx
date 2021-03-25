@@ -1,7 +1,7 @@
 import { Card, Form } from 'antd';
 import { Digit, InputNumber, ProSelect } from '@/components/Form';
 import styles from '../index.less';
-import { attrBasicSelectOptions } from '../variables';
+import { attrBasicSelectOptions } from '@/utils/helper';
 
 export default ({ code }: { code: CharacterAttribute }) => {
   return (
