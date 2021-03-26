@@ -1,9 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Card, Form } from 'antd';
-import ProForm, { ProFormText, ProFormCheckbox, ProFormRadio } from '@ant-design/pro-form';
+import { Anchor } from 'antd';
 import type { ProColumns } from '@ant-design/pro-table';
 import { EditableProTable } from '@ant-design/pro-table';
-import { Digit, InputNumber, ProSelect } from '@/components/Form';
+import {
+  ProInput,
+  ProForm,
+  ProCheckbox,
+  ProRadio,
+  ProNumber,
+  InputNumber,
+  ProSelect,
+} from '@/components';
 import {
   attrBasicSelectOptionsAry,
   attrBasicSelectOptions,
@@ -19,11 +27,7 @@ import Wunei from './Component/Wunei';
 import PanelAttrField from './Component/PanelAttrField';
 import Talent from './Component/Talent';
 import { useModel } from 'umi';
-
-console.log(attrWeaponSetSelectOptions);
-const EditTableInput = () => {
-  return <InputNumber min={0} max={1000} />;
-};
+import styles from './index.less';
 // const
 type DataSourceType = {
   id: React.Key;
@@ -40,7 +44,7 @@ const columns: ProColumns<DataSourceType>[] = [
     title: '类别',
     dataIndex: 'type',
     key: 'type',
-    width: '7%',
+    width: '3%',
     valueType: 'text',
     renderFormItem: (schema, config) => {
       return config.record?.type;
@@ -58,8 +62,8 @@ const columns: ProColumns<DataSourceType>[] = [
     title: '固定词条1加值',
     key: 'fixModifier1Val',
     dataIndex: 'fixModifier1Val',
-    renderFormItem: EditTableInput,
-    width: '7%',
+    renderFormItem: InputNumber,
+    width: '8%',
   },
   {
     title: '固定词条2',
@@ -73,8 +77,8 @@ const columns: ProColumns<DataSourceType>[] = [
     title: '固定词条2加值',
     key: 'fixModifier2Val',
     dataIndex: 'fixModifier2Val',
-    renderFormItem: EditTableInput,
-    width: '7%',
+    renderFormItem: InputNumber,
+    width: '8%',
   },
   {
     title: '随机词条1',
@@ -88,8 +92,8 @@ const columns: ProColumns<DataSourceType>[] = [
     title: '随机词条1加值(%)',
     key: 'dynModifier1Val',
     dataIndex: 'dynModifier1Val',
-    renderFormItem: EditTableInput,
-    width: '7%',
+    renderFormItem: InputNumber,
+    width: '8%',
   },
   {
     title: '随机词条2',
@@ -103,8 +107,8 @@ const columns: ProColumns<DataSourceType>[] = [
     title: '随机词条2加值(%)',
     key: 'dynModifier2Val',
     dataIndex: 'dynModifier2Val',
-    renderFormItem: EditTableInput,
-    width: '7%',
+    renderFormItem: InputNumber,
+    width: '8%',
   },
   {
     title: '随机词条3',
@@ -118,8 +122,8 @@ const columns: ProColumns<DataSourceType>[] = [
     title: '随机词条3加值(%)',
     key: 'dynModifier3Val',
     dataIndex: 'dynModifier3Val',
-    renderFormItem: EditTableInput,
-    width: '7%',
+    renderFormItem: InputNumber,
+    width: '8%',
   },
   {
     title: '随机词条4',
@@ -133,8 +137,8 @@ const columns: ProColumns<DataSourceType>[] = [
     title: '随机词条4加值(%)',
     key: 'dynModifier4Val',
     dataIndex: 'dynModifier4Val ',
-    renderFormItem: EditTableInput,
-    width: '7%',
+    renderFormItem: InputNumber,
+    width: '8%',
   },
 ];
 
@@ -143,13 +147,48 @@ const equipments: EquipmentType[] = ['head', 'body', 'waist', 'wrist'];
 export default ({ form }: { form: any }) => {
   const { showDetail } = useModel('ac');
 
+  const sharedProps = {
+    formItemProps: {
+      className: 'c-field',
+      noStyle: true,
+    },
+    placeholder: '自动计算',
+    readonly: true,
+  };
   return (
     <Card>
       <h3>基本数据</h3>
       <ProForm.Group>
-        <ProFormText name="name" label="名字" required />
-        <ProFormText name="id" label="ID" required hidden />
+        <ProInput name="name" label="名字" required />
+        <ProInput name="id" label="ID" required hidden />
       </ProForm.Group>
+      <div className={styles.battleStatusPanel}>
+        <Anchor affix={true} offsetTop={GLOBAL_CONFIG.headerHeight} onClick={() => {}}>
+          <div className={'ac-content'}>
+            <h3>最终战斗数值</h3>
+            <ProForm.Group>
+              <div>
+                气血 <ProNumber {...sharedProps} name={['attrBattle', 'hp']} />
+              </div>
+              <div>
+                物攻 <ProNumber {...sharedProps} name={['attrBattle', 'patk']} />
+              </div>
+              <div>
+                物防 <ProNumber {...sharedProps} name={['attrBattle', 'pdef']} />
+              </div>
+              <div>
+                法攻 <ProNumber {...sharedProps} name={['attrBattle', 'matk']} />
+              </div>
+              <div>
+                法防 <ProNumber {...sharedProps} name={['attrBattle', 'mdef']} />
+              </div>
+              <div>
+                会心 <ProNumber {...sharedProps} name={['attrBattle', 'critical']} />
+              </div>
+            </ProForm.Group>
+          </div>
+        </Anchor>
+      </div>
       <h3>最终面板数值</h3>
       <ProForm.Group>
         <PanelAttrField code="hp" />
@@ -159,32 +198,24 @@ export default ({ form }: { form: any }) => {
         <PanelAttrField code="mdef" />
         <PanelAttrField code="critical" />
       </ProForm.Group>
-      <h3>最终战斗数值</h3>
-      <ProForm.Group>
-        <Digit placeholder="自动计算" name={['attrBattle', 'hp']} label="气血" disabled />
-        <Digit placeholder="自动计算" name={['attrBattle', 'patk']} label="物攻" disabled />
-        <Digit placeholder="自动计算" name={['attrBattle', 'pdef']} label="物防" disabled />
-        <Digit placeholder="自动计算" name={['attrBattle', 'matk']} label="法攻" disabled />
-        <Digit placeholder="自动计算" name={['attrBattle', 'mdef']} label="法防" disabled />
-        <Digit placeholder="自动计算" name={['attrBattle', 'critical']} label="会心" disabled />
-      </ProForm.Group>
+
       <div style={{ display: showDetail ? 'inherit' : 'none' }}>
         <h3>基础属性</h3>
         <ProForm.Group>
-          <Digit placeholder="自动计算" name={['attrRaw', 'hp']} label="气血" disabled />
-          <Digit placeholder="自动计算" name={['attrRaw', 'patk']} label="物攻" disabled />
-          <Digit placeholder="自动计算" name={['attrRaw', 'pdef']} label="物防" disabled />
-          <Digit placeholder="自动计算" name={['attrRaw', 'matk']} label="法攻" disabled />
-          <Digit placeholder="自动计算" name={['attrRaw', 'mdef']} label="法防" disabled />
-          <Digit placeholder="自动计算" name={['attrRaw', 'critical']} label="会心" disabled />
+          <ProNumber placeholder="自动计算" name={['attrRaw', 'hp']} label="气血" disabled />
+          <ProNumber placeholder="自动计算" name={['attrRaw', 'patk']} label="物攻" disabled />
+          <ProNumber placeholder="自动计算" name={['attrRaw', 'pdef']} label="物防" disabled />
+          <ProNumber placeholder="自动计算" name={['attrRaw', 'matk']} label="法攻" disabled />
+          <ProNumber placeholder="自动计算" name={['attrRaw', 'mdef']} label="法防" disabled />
+          <ProNumber placeholder="自动计算" name={['attrRaw', 'critical']} label="会心" disabled />
         </ProForm.Group>
       </div>
       <h3>兵刃练度</h3>
       <div style={{ display: showDetail ? 'inherit' : 'none' }}>
         <ProForm.Group>
-          <Digit name={['weapon', 'attrBonus', 'hp']} label="气血" />
-          <Digit name={['weapon', 'attrBonus', 'patk']} label="物攻" />
-          <Digit name={['weapon', 'attrBonus', 'matk']} label="法攻" />
+          <ProNumber name={['weapon', 'attrBonus', 'hp']} label="气血" />
+          <ProNumber name={['weapon', 'attrBonus', 'patk']} label="物攻" />
+          <ProNumber name={['weapon', 'attrBonus', 'matk']} label="法攻" />
         </ProForm.Group>
       </div>
       <ProForm.Group>
@@ -194,7 +225,7 @@ export default ({ form }: { form: any }) => {
           label={`特性加成1`}
         />
 
-        <Digit name={['weapon', 'otherBonus', 0, 'value']} label={`特性加成1加值(%)`} />
+        <ProNumber name={['weapon', 'otherBonus', 0, 'value']} label={`特性加成1加值(%)`} />
       </ProForm.Group>
       <h3>魂石</h3>
       <ProForm.Item name="soulStones" trigger="onValuesChange">
@@ -215,13 +246,13 @@ export default ({ form }: { form: any }) => {
           options={attrBasicSelectOptionsAry}
           label="两枚效果"
         />
-        <Digit name={['soulStoneSet', 0, 'value']} label="两枚效果加值(%)" />
+        <ProNumber name={['soulStoneSet', 0, 'value']} label="两枚效果加值(%)" />
         <ProSelect
           name={['soulStoneSet', 1, 'types']}
           options={attrSoulStoneSelectOptionsAry}
           label="三枚效果"
         />
-        <Digit name={['soulStoneSet', 1, 'value']} label="三枚效果加值(%)" />
+        <ProNumber name={['soulStoneSet', 1, 'value']} label="三枚效果加值(%)" />
       </ProForm.Group>
       <h3>及身</h3>
       {equipments.map((o, i) => {
@@ -235,7 +266,7 @@ export default ({ form }: { form: any }) => {
           mode="multiple"
           disabled
         />
-        <Digit name={['equipped', 'setBonus', 0, 'value']} label="四件+3效果加值(%)" />
+        <ProNumber name={['equipped', 'setBonus', 0, 'value']} label="四件+3效果加值(%)" />
         <ProSelect
           name={['equipped', 'setBonus', 1, 'types']}
           options={attrBasicSelectOptionsAry}
@@ -243,7 +274,7 @@ export default ({ form }: { form: any }) => {
           mode="multiple"
           disabled
         />
-        <Digit name={['equipped', 'setBonus', 1, 'value']} label="四件+6效果加值(%)" />
+        <ProNumber name={['equipped', 'setBonus', 1, 'value']} label="四件+6效果加值(%)" />
 
         <ProSelect
           name={['equipped', 'setBonus', 2, 'types']}
@@ -252,10 +283,10 @@ export default ({ form }: { form: any }) => {
           mode="multiple"
           maxTagCount={1}
         />
-        <Digit name={['equipped', 'setBonus', 2, 'value']} label="四件+9效果加值(%)" />
+        <ProNumber name={['equipped', 'setBonus', 2, 'value']} label="四件+9效果加值(%)" />
       </ProForm.Group>
       <h3>五内</h3>
-      <Wunei form={form} />
+      <Wunei />
       <h3>列星 - 天魂之力</h3>
       <ProForm.Group>
         <ProSelect
@@ -265,7 +296,7 @@ export default ({ form }: { form: any }) => {
           mode="multiple"
           readonly
         />
-        <Digit name={['astrolabe', 'percentage', 0, 'value']} label={`百分比加值(%)`} />
+        <ProNumber name={['astrolabe', 'percentage', 0, 'value']} label={`百分比加值(%)`} />
 
         <ProSelect
           name={['astrolabe', 'percentage', 1, 'types']}
@@ -274,7 +305,7 @@ export default ({ form }: { form: any }) => {
           mode="multiple"
           readonly
         />
-        <Digit name={['astrolabe', 'percentage', 1, 'value']} label={`百分比加值(%)`} />
+        <ProNumber name={['astrolabe', 'percentage', 1, 'value']} label={`百分比加值(%)`} />
 
         <ProSelect
           name={['astrolabe', 'percentage', 2, 'types']}
@@ -283,7 +314,7 @@ export default ({ form }: { form: any }) => {
           mode="multiple"
           readonly
         />
-        <Digit name={['astrolabe', 'percentage', 2, 'value']} label={`百分比加值(%)`} />
+        <ProNumber name={['astrolabe', 'percentage', 2, 'value']} label={`百分比加值(%)`} />
 
         <ProSelect
           name={['astrolabe', 'percentage', 3, 'types']}
@@ -292,18 +323,18 @@ export default ({ form }: { form: any }) => {
           mode="multiple"
           readonly
         />
-        <Digit name={['astrolabe', 'percentage', 3, 'value']} label={`百分比加值(%)`} />
+        <ProNumber name={['astrolabe', 'percentage', 3, 'value']} label={`百分比加值(%)`} />
       </ProForm.Group>
       <h3>角色天赋百分比加成</h3>
       <Talent />
       <h3>BUFF</h3>
       <ProForm.Group>
-        <ProFormCheckbox.Group name="battleBuffs" options={buffCheckboxGroup} />
+        <ProCheckbox.Group name="battleBuffs" options={buffCheckboxGroup} />
       </ProForm.Group>
 
       <h3>阵型</h3>
       <ProForm.Group>
-        <ProFormRadio.Group name="formation" options={formationRadioGroup} />
+        <ProRadio.Group name="formation" options={formationRadioGroup} />
       </ProForm.Group>
     </Card>
   );

@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react';
 import { Card, Form } from 'antd';
-import ProForm, { ProFormText, ProFormCheckbox, ProFormRadio } from '@ant-design/pro-form';
 import type { ProColumns } from '@ant-design/pro-table';
 import { EditableProTable } from '@ant-design/pro-table';
-import { Digit, InputNumber, ProSelect } from '@/components/Form';
+import {
+  ProForm,
+  ProInput,
+  ProFormCheckbox,
+  ProFormRadio,
+  ProNumber,
+  InputNumber,
+  ProSelect,
+} from '@/components/Form';
 import {
   attrBasicSelectOptionsAry,
   attrBasicSelectOptions,
@@ -17,7 +24,7 @@ import {
 import styles from './index.less';
 import { useModel } from 'umi';
 
-export default ({ form }: { form: any }) => {
+export default () => {
   const { myCharacters } = useModel('ac');
   console.log(myCharacters);
 
@@ -25,20 +32,26 @@ export default ({ form }: { form: any }) => {
     <Card>
       <h3>基本数据</h3>
       <ProForm.Group>
-        <ProFormText name="name" label="名字" required />
-        <ProFormText name="id" label="ID" required hidden />
+        <ProInput name="name" label="名字" required />
+        <ProInput name="id" label="ID" required hidden />
       </ProForm.Group>
-      <h3>进攻方</h3>
+      <h3>战斗双方</h3>
       <ProForm.Group>
         <ProSelect
           options={myCharacters.map((o) => ({ value: o.id, label: o.name }))}
           name="attackerId"
-          labelFie
-          label="角色"
+          label="进攻方角色"
           required
         />
       </ProForm.Group>
-      <h3>防御方</h3>
+      <ProForm.Group>
+        <ProSelect
+          options={myCharacters.map((o) => ({ value: o.id, label: o.name }))}
+          name="defenderId"
+          label="防御方角色"
+          required
+        />
+      </ProForm.Group>
     </Card>
   );
 };

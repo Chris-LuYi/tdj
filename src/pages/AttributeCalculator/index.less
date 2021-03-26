@@ -1,4 +1,12 @@
-@import '~antd/lib/style/themes/default.less';
+@import '../../style/index.less';
+
+.root{
+  :global {
+    .ant-select-selection-overflow{
+      flex-wrap: nowrap;
+    }
+  }
+}
 
 .pre {
   margin: 12px 0;
@@ -18,11 +26,30 @@
   }
 }
 
-.dynamicItemContainer {
-  color: red;
-  :global {
-    .ant-space-item {
-      // display: flex;
+// .dynamicItemContainer {
+//   color: red;
+//   :global {
+//     .ant-space-item {
+//       // display: flex;
+//     }
+//   }
+// }
+
+.battleStatusPanel{
+  margin-bottom: 12px;
+  :global{
+    .ant-anchor-ink{
+      display: none;
+    }
+    .ant-anchor{
+      padding-left: 0;
+    }
+    .ac-content{
+      padding:8px;
+      border:1px solid #ccc;
+    }
+    .c-field{
+      flex-direction: row;
     }
   }
 }

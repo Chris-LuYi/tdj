@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form } from 'antd';
-import { Digit, ProSelect } from '@/components/Form';
+import { ProNumber, ProSelect } from '@/components/Form';
 import { attrBasicSelectOptionsAry } from '@/utils/helper';
 import ProForm from '@ant-design/pro-form';
 
@@ -19,7 +19,7 @@ export default () => {
                     label={`天赋百分比${i + 1}加值`}
                     mode="multiple"
                   />
-                  <Digit name={[i, 'value']} label={`天赋百分比${i + 1}加值(%)`} />
+                  <ProNumber name={[i, 'value']} label={`天赋百分比${i + 1}加值(%)`} />
                 </React.Fragment>
               );
             })}

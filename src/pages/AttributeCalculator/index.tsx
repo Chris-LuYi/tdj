@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Form, message, Popconfirm } from 'antd';
 import { useModel } from 'umi';
 import ProForm from '@ant-design/pro-form';
-import { Select } from '@/components/Form';
+import { PageContainer, Select } from '@/components';
 import type { FormInstance } from 'antd/es/form';
 import { calculateAttribute, calculateFinalAttribute } from '@/utils/helper';
 import Basic from './Basic';
 import Summary from './Summary';
+import styles from './index.less';
 
 export default (props: any): React.ReactNode => {
   // const intl = useIntl();
@@ -41,6 +41,7 @@ export default (props: any): React.ReactNode => {
   return (
     <ProForm<TDJ.Character>
       form={form}
+      className={styles.root}
       submitter={{
         render: () => {
           // console.log(props);

@@ -1,8 +1,7 @@
 import React from 'react';
 import { Button, Form } from 'antd';
-import { Digit, ProSelect } from '@/components/Form';
+import { ProForm, ProInput, ProNumber, ProSelect } from '@/components/Form';
 import { attrBasicSelectOptionsAry } from '@/utils/helper';
-import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { useModel } from 'umi';
 
 export default () => {
@@ -10,8 +9,8 @@ export default () => {
   return (
     <>
       <ProForm.Group>
-        <Digit name={['wunei', 'percentage', 'value']} label={`五内百分比加值`} />
-        <ProFormText name={['wunei', 'percentage', 'types']} label="五内百分比" hidden />
+        <ProNumber name={['wunei', 'percentage', 'value']} label={`五内百分比加值`} />
+        <ProInput name={['wunei', 'percentage', 'types']} label="五内百分比" hidden />
       </ProForm.Group>
       <div style={{ display: showDetail ? 'inherit' : 'none' }}>
         <Form.List name={['wunei', 'fixed']}>
@@ -26,7 +25,7 @@ export default () => {
                         options={attrBasicSelectOptionsAry}
                         label={`五内节点${i + 1}固定加值`}
                       />
-                      <Digit name={[i, 'value']} label={`五内节点${i + 1}固定加值(%)`} />
+                      <ProNumber name={[i, 'value']} label={`五内节点${i + 1}固定加值(%)`} />
                     </React.Fragment>
                   );
                 })}

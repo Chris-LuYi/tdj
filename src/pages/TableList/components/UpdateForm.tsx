@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal } from 'antd';
 import {
   ProFormSelect,
-  ProFormText,
+  ProInput,
   ProFormTextArea,
   StepsForm,
   ProFormRadio,
@@ -64,7 +64,7 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
           defaultMessage: '基本信息',
         })}
       >
-        <ProFormText
+        <ProInput
           name="name"
           label={intl.formatMessage({
             id: 'pages.searchTable.updateForm.ruleName.nameLabel',

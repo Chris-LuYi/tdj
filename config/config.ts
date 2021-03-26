@@ -63,4 +63,9 @@ export default defineConfig({
       projectName: 'swagger',
     },
   ],
+  define: {
+    GLOBAL_CONFIG: {
+      headerHeight: 48,
+    },
+  },
 });

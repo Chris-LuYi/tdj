@@ -1,8 +1,7 @@
 import React from 'react';
 import { Button, Form } from 'antd';
-import { Digit, ProSelect } from '@/components/Form';
+import { ProForm, ProInput, ProNumber, ProSelect } from '@/components/Form';
 import { attrBasicSelectOptionsAry } from '@/utils/helper';
-import ProForm, { ProFormText } from '@ant-design/pro-form';
 import type { FormInstance } from 'antd/es/form';
 import { useModel } from 'umi';
 
@@ -26,7 +25,7 @@ export default ({ code, index }: { code: EquipmentType; index: number; form: For
             label={`${prefix}属性1`}
           />
 
-          <Digit
+          <ProNumber
             name={['equipped', 'equipments', index, 'attrBonus', 0, 'value']}
             label={`${prefix}属性1加值`}
           />
@@ -35,12 +34,12 @@ export default ({ code, index }: { code: EquipmentType; index: number; form: For
             options={attrBasicSelectOptionsAry}
             label={`${prefix}属性2`}
           />
-          <Digit
+          <ProNumber
             name={['equipped', 'equipments', index, 'attrBonus', 1, 'value']}
             label={`${prefix}属性2加值`}
           />
 
-          <ProFormText
+          <ProInput
             name={['equipped', 'equipments', index, 'type']}
             label={`${prefix}部位`}
             hidden
@@ -60,7 +59,7 @@ export default ({ code, index }: { code: EquipmentType; index: number; form: For
                       options={attrBasicSelectOptionsAry}
                       label={`${prefix}饰品属性${i + 1}`}
                     />
-                    <Digit name={[i, 'value']} label={`${prefix}饰品属性${i + 1}加值(%)`} />
+                    <ProNumber name={[i, 'value']} label={`${prefix}饰品属性${i + 1}加值(%)`} />
                   </React.Fragment>
                 );
               })}

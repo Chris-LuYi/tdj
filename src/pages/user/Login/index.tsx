@@ -8,7 +8,8 @@ import {
 } from '@ant-design/icons';
 import { Alert, Space, message, Tabs } from 'antd';
 import React, { useState } from 'react';
-import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
+import { ProFormCaptcha } from '@ant-design/pro-form';
+import { ProForm, ProCheckbox, ProInput } from '@/components';
 import { useIntl, Link, history, FormattedMessage, SelectLang, useModel } from 'umi';
 import Footer from '@/components/Footer';
 import { login } from '@/services/ant-design-pro/api';
@@ -143,7 +144,7 @@ const Login: React.FC = () => {
             )}
             {type === 'account' && (
               <>
-                <ProFormText
+                <ProInput
                   name="username"
                   fieldProps={{
                     size: 'large',
@@ -165,7 +166,7 @@ const Login: React.FC = () => {
                     },
                   ]}
                 />
-                <ProFormText.Password
+                <ProInput.Password
                   name="password"
                   fieldProps={{
                     size: 'large',
@@ -193,7 +194,7 @@ const Login: React.FC = () => {
             {status === 'error' && loginType === 'mobile' && <LoginMessage content="验证码错误" />}
             {type === 'mobile' && (
               <>
-                <ProFormText
+                <ProInput
                   fieldProps={{
                     size: 'large',
                     prefix: <MobileOutlined className={styles.prefixIcon} />,
@@ -277,9 +278,9 @@ const Login: React.FC = () => {
                 marginBottom: 24,
               }}
             >
-              <ProFormCheckbox noStyle name="autoLogin">
+              <ProCheckbox noStyle name="autoLogin">
                 <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
-              </ProFormCheckbox>
+              </ProCheckbox>
               <a
                 style={{
                   float: 'right',
